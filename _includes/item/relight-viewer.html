@@ -1,0 +1,60 @@
+{% comment %}
+
+test include to add RTI viewer using Relight OpenLIME. 
+
+{% endcomment %}
+<link rel="stylesheet" href="{{ '/assets/lib/relight/css/skin.css' | relative_url }}"/>
+
+	<style>
+html, body {
+	margin: 0px;
+	padding: 0px;
+	height: 100%;
+}
+
+#openlime {
+	position:relative;
+	height: 100%
+}
+
+#openlime>canvas {
+	width: 100%;
+	height: 100%;
+	/* this is important, it would cause firefox flickering! */
+	overflow: hidden;
+}
+
+	</style>
+
+<div id="openlime"></div>
+
+<script src="{{ '/assets/lib/relight/js/openlime.min.js' | relative_url }}"></script>
+
+
+<script>
+
+async function init() {
+	//let layout = await autodetect();
+	//let normals = await autodetectNormals(layout);
+	var lime = new OpenLIME.Viewer('#openlime', { background:'black' });
+
+
+	let layer = new OpenLIME.Layer({ 
+		layout: 'image', 
+		type:'rti',
+		url: '{{ page.object_location | relative_url }}/info.json',
+		normals: false
+	});
+
+	lime.canvas.addLayer('RTI', layer); 
+	OpenLIME.Skin.setUrl('{{ "/assets/lib/relight/css/skin.svg" | relative_url }}');
+	let ui = new OpenLIME.UIBasic(lime, { skin: 'skin.svg', showLightDirections: true });
+	ui.actions.light.active = true;
+	ui.actions.layers.display = true;
+	lime.camera.maxFixedZoom = 1;
+	window.lime = lime;
+}
+
+init();
+
+</script>
