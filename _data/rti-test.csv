@@ -1,0 +1,4 @@
+objectid,title,description,display_template,object_location,image_small,image_thumb
+rti-01,Center View,,relight_viewer,/objects/center,,
+rti-02,Left View,,relight_viewer,/objects/left,,
+rti-03,Right View,,relight_viewer,/objects/right,,
